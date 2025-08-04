@@ -106,7 +106,7 @@ jobs:
     needs: [build, provenance, run]
     runs-on: ubuntu-latest
     steps:
-      - name Verify SLSA
+      - name: Verify SLSA
         uses: slsa-framework/slsa-verifier/actions/installer@v2.7.1
         with:
           SOURCE_URI: github.com/marcosdfernandez/bh-aisec-project1
