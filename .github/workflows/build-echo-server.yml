@@ -101,3 +101,17 @@ jobs:
 
           # See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions for log types.
           echo "::warning ${IMAGE}@${DIGEST}"
+
+  verify:
+    needs: [build, provenance, run]
+    runs-on: ubuntu-latest
+    steps:
+      - name Verify SLSA
+        uses: slsa-framework/slsa-verifier/actions/installer@v2.7.1
+        with:
+          SOURCE_URI: github.com/marcosdfernandez/bh-aisec-project1
+        env: 
+          IMAGE: ${{needs.build.outputs.image }}
+          DIGEST: ${{ needs.build.outputs.digest }}
+        run: |
+          slsa-verifier verify-image "${IMAGE}@${DIGEST}" --source-uri "${SOURCE_URI}" --builder-id https://github.com/slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml
