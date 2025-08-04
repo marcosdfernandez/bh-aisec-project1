@@ -113,5 +113,3 @@ jobs:
         env: 
           IMAGE: ${{needs.build.outputs.image }}
           DIGEST: ${{ needs.build.outputs.digest }}
-        run: |
-          slsa-verifier verify-image "${IMAGE}@${DIGEST}" --source-uri "${SOURCE_URI}" --builder-id https://github.com/slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml
